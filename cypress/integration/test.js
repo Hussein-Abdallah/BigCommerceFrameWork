@@ -3,7 +3,7 @@ describe('Test Environment', function() {
     before (() => {
         
         cy.visit("", {timeout: 30000})
-        
+        cy.wait(5000);
     });
     /*--------------------------------------------
     Before each test retrieve data from fixture 
@@ -17,9 +17,8 @@ describe('Test Environment', function() {
     link and clickable
     --------------------------------------------*/
     it('Test Environment', function() {
-        cy.log(cy.url())
+        cy.log("Test Completed")
         cy.wait(5000);
- 
     });
     
 })
