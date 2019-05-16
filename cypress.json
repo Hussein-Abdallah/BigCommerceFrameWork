@@ -1,0 +1,11 @@
+{
+  "projectId": "164wn9",
+  "blacklistHosts": "www.google-analytics.com, *google.com",
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "cypress/results/",
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "baseUrl": "http://www.ironman4x4.com/",
+  "env": {
+    "envName": "production"
+  }
+    
+}
