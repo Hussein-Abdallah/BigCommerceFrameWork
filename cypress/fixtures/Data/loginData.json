@@ -1,0 +1,10 @@
+{
+    "loginPageHeading": "Sign in",
+    "usernameWarningMessage": "Please use a valid email address, such as user@example.com.",
+    "passwordWarningMessage": "You must enter a password.",
+    "invalidUserAlertMessage": "You must enter a password.",
+    "errorMessage": "Your email address or password is incorrect. Please try again. If you've forgotten your sign in details, just click the 'Forgot your password?' link below.",
+    "logoutMessage": "You've been logged out of your account successfully.",
+    "registerDivHeader": "Register",
+    "registerLink": "/login.php?action=create_account"
+}

@@ -1,0 +1,12 @@
+{
+    "forgetPasswordLink": ".forgot-password",
+    "loginPageHeading": ".page-heading",
+    "signInForm": ".login-form",
+    "emailInlineMessage": ".form-field--inputEmail .form-inlineMessage",
+    "passwordInlineMessage": ".form-field--inputPassword .form-inlineMessage",
+    "loginAlertErrorMessage": ".alertBox--error .alertBox-message span",
+    "loginAlertSuccessMessage": ".alertBox--success .alertBox-message span",
+    "registerDivHeader": "div.new-customer h2",
+    "registerButton": "div.new-customer a"
+
+}

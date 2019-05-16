@@ -1,0 +1,25 @@
+{
+    "firstNameInput": "#FormField_4_input",
+    "firstNameLabel": "#FormField_4",
+    "lastNameInput": "#FormField_5_input",
+    "lastNameLabel": "#FormField_5",
+    "emailInput": "#FormField_1_input",
+    "emailLabel": "#FormField_1",
+    "passwordInput": "#FormField_2_input",
+    "passwordLabel": "#FormField_2",
+    "confirmPasswordInput": "#FormField_3_input",
+    "confirmPasswordLabel": "#FormField_3",
+    "addressLine1Input": "#FormField_8_input",
+    "addressLine1Label": "#FormField_8",
+    "cityInput": "#FormField_10_input",
+    "cityLabel": "#FormField_10",
+    "countrySelect": "#FormField_11_select",
+    "countryLabel": "#FormField_11",
+    "stateSelect": "#FormField_12_select",
+    "stateLabel": "#FormField_12 label",
+    "phoneInput": "#FormField_7_input",
+    "phoneLabel": "#FormField_7"
+    
+
+
+}
