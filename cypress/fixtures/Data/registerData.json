@@ -1,3 +1,8 @@
 {
-   
+   "passwordInlineMessage": "Passwords must be at least 7 characters and contain both alphabetic and numeric characters.",
+   "confirmPasswordInlineMessage": "Your passwords do not match.",
+   "emailInlineMessage": "You must enter a valid email.",
+   "formErrorMessage1": "The email address",
+   "formErrorMessage2": "is already in use. Please enter a different one.",
+   "createdAccountPageHeading": "YOUR ACCOUNT HAS BEEN CREATED"
 }

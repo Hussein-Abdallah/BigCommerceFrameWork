@@ -1,6 +1,8 @@
 {
   "projectId": "164wn9",
+  "requestBaseUrl": "https://login.bigcommerce.com",
   "blacklistHosts": "www.google-analytics.com, *google.com",
+  "chromeWebSecurity": false,
   "reporter": "mochawesome",
   "reporterOptions": {
     "reportDir": "cypress/results/",

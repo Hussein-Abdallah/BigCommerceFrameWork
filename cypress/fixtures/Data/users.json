@@ -13,7 +13,7 @@
             "city": "Ottawa",
             "country": "Canada",
             "state": "Ontario",
-            "postalcode": "K2P 2H8",
+            "postalCode": "K2P 2H8",
             "geo": {
                 "lat": "-37.3159",
                 "lng": "81.1496"
@@ -45,7 +45,7 @@
             "city": "Ottawa",
             "country": "Canada",
             "state": "Ontario",
-            "postalcode": "K2P 2H8",
+            "postalCode": "K2P 2H8",
             "geo": {
                 "lat": "-37.3159",
                 "lng": "81.1496"
@@ -77,7 +77,7 @@
             "city": "Lake Forest",
             "country": "United States",
             "state": "California",
-            "postalcode": "92630",
+            "postalCode": "92630",
             "geo": {
                 "lat": "-37.3159",
                 "lng": "81.1496"

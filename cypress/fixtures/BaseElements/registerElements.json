@@ -5,12 +5,16 @@
     "lastNameLabel": "#FormField_5",
     "emailInput": "#FormField_1_input",
     "emailLabel": "#FormField_1",
+    "emailInlineMessage": "#FormField_1 .form-inlineMessage",
     "passwordInput": "#FormField_2_input",
     "passwordLabel": "#FormField_2",
+    "passwordInlineMessage": "#FormField_2 .form-inlineMessage",
     "confirmPasswordInput": "#FormField_3_input",
     "confirmPasswordLabel": "#FormField_3",
+    "confirmPasswordInlineMessage": "#FormField_3 .form-inlineMessage",
     "addressLine1Input": "#FormField_8_input",
     "addressLine1Label": "#FormField_8",
+    "addressLine2Input": "#FormField_9_input",
     "cityInput": "#FormField_10_input",
     "cityLabel": "#FormField_10",
     "countrySelect": "#FormField_11_select",
@@ -18,7 +22,10 @@
     "stateSelect": "#FormField_12_select",
     "stateLabel": "#FormField_12 label",
     "phoneInput": "#FormField_7_input",
-    "phoneLabel": "#FormField_7"
+    "phoneLabel": "#FormField_7",
+    "postalCodeInput": "#FormField_13_input",
+    "companyNameInput": "#FormField_6_input",
+    "createdAccountPageHeading": ".page-heading"
     
 
 

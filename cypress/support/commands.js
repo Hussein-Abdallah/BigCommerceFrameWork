@@ -8,6 +8,8 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
+import 'cypress-wait-until';
+
 //
 // -- This is a parent command --
 Cypress.Commands.add("signIn", ({email, password}) => { 
@@ -69,8 +71,21 @@ Cypress.Commands.add("forgetPassword", ({email}) => {
 
  });
 
+ //function to insert text into fields
+Cypress.Commands.add("fillInputForm", ({element, text}) =>{
+    cy.get(element)
+        .clear()
+        .type(text)
+})
+
+Cypress.Commands.add("fillSelectForm", ({element, text}) => {
+    cy.get(element)
+    .select(text)
+    cy.wait(1000)
+})
+
  Cypress.Commands.add("accessAccountPage",()=>{
-    cy.get('body').then(($a) => { 
+    cy.get('body', {timeout:60000}).then(($a) => { 
         if ($a.text().includes('Login')) { 
             cy.contains('Login')
             .click({force:true, timeout:30000})
@@ -89,7 +104,7 @@ Cypress.Commands.add("forgetPassword", ({email}) => {
     })    
  });
 
- Cypress.Commands.add("brokenlinks",()=>{
+ Cypress.Commands.add("brokenLinks",()=>{
      
     let name = this.test.fullTitle();
     cy.writeFile(name+'.csv','ID, Name, Link, Locatio, Status\n', { encoding: 'utf-8'})
