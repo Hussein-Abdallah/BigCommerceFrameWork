@@ -273,73 +273,17 @@ describe.skip('Login.php Functionality Automation Tests - Login, Logout, Reset, 
                 cy.get(this.registerElements.createdAccountPageHeading, {requestTimeout: 6000})
                 .should('be.visible', {timeout: 6000})
             })
+
+            it('Confirm New User Registeration by Signing In NewUser', function() {
+                cy.logout();
+                cy.loginPage()
+                cy.signIn({email: this.users.newUser.email, password: this.users.newUser.password });
+                cy.url().should('include', 'account.php')
+                verifyTextContent(this.myAccountElements.accountPageHeading, this.myAccountData.accountPageHeading)
+            })
         })
     })
 })
-
-
-
-
-
-
-
-
-describe.only('delete newly registered user from database', function() {
-    Cypress.Commands.add('loginBySingleSignOn', (overrides = {}) => {
-
-        Cypress.log({
-          name: 'loginBySingleSignOn'
-        })
-        const options = {
-          method: 'POST',
-          url: 'https://ironman4x4america.com/admin/oauth/bigcommerce',
-          form: true, // we are submitting a regular form body
-          body: {
-            user_email: 'team@arcticleaf.io',
-            user_password: 'K9,NCrYD@cKR3,t.tJKY8PENWxjYi',
-          }
-        }
-    
-        // allow us to override defaults with passed in overrides
-        //_.extend(options, overrides)
-    
-        cy.request(options)
-      })
-  
-  
-      it('can authenticate with cy.request', function(){
-  
-        cy.loginBySingleSignOn()
-          
-        cy.visit('https://ironman4x4america.com/manage/customers')
-        cy.wait(3000)
-
-        cy.get("#content-iframe").then(function ($iframe) {
-            
-            const $body = $iframe.contents().find('body')
-            cy.wrap($body, {timeout:60000})
-            .find('a')
-     
-        })
-
-      })
-
-    })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

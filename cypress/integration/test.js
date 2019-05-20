@@ -121,3 +121,108 @@ describe('Logging In - Single Sign on', function(){
   })
 
 })
+
+
+
+
+
+
+const _   = Cypress._
+
+// require node's url module
+const url = require('url')
+
+
+describe('delete newly registered user from database', function() {
+    Cypress.Commands.add('loginBySingleSignOn', (overrides = {}) => {
+
+        Cypress.log({
+          name: 'loginBySingleSignOn'
+        })
+    
+        const options = {
+          method: 'POST',
+          url: 'https://ironman4x4america.com/manage/customers',
+          form: true, // we are submitting a regular form body
+          body: {
+            user_email: 'team@arcticleaf.io',
+            user_password: 'K9,NCrYD@cKR3,t.tJKY8PENWxjYi',
+          }
+        }
+    
+        // allow us to override defaults with passed in overrides
+        _.extend(options, overrides)
+    
+        cy.request(options)
+    })
+  
+    it('can authenticate with cy.request', function(){
+        Cypress.Cookies.preserveOnce()
+        // before we start, there should be no session cookie
+        cy.getCookie('cypress-session-cookie').should('not.exist')
+  
+        // this automatically gets + sets cookies on the browser
+        // and follows all of the redirects that ultimately get
+        // us to /dashboard.html
+        cy.loginBySingleSignOn()
+          .then((resp) => {
+            // yup this should all be good
+            expect(resp.status).to.eq(200)
+  
+            // we're at http://localhost:7074/dashboard contents
+            expect(resp.body).to.include('<iframe')
+          })
+  
+        // the redirected page hits the server, and the server middleware
+        // parses the authentication token and returns the dashboard view
+        // with our cookie 'cypress-session-cookie' set
+        //cy.getCookie('cypress-session-cookie').should('exist')
+  
+        // you don't need to do this next part but
+        // just to prove we can also visit the page in our app
+        cy.loginBySingleSignOn()
+          .then((resp) => {
+            // yup this should all be good
+            expect(resp.status).to.eq(200)
+  
+            // we're at http://localhost:7074/dashboard contents
+            expect(resp.body).to.include('<iframe')
+          })
+  cy.visit("https://ironman4x4america.com/manage/customers")
+        //cy.get('h1').should('contain', 'Welcome to the Dashboard')
+  })
+      it.skip('can authenticate with cy.request', function(){
+
+
+        cy.loginBySingleSignOn()
+          
+        cy.visit('https://ironman4x4america.com/manage/customers')
+        cy.wait(3000)
+
+        cy.get("#content-iframe").then(function ($iframe) {
+            
+            const $body = $iframe.contents().find('body')
+            cy.wrap($body, {timeout:60000})
+            .find('a')
+     
+        })
+
+      })
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
