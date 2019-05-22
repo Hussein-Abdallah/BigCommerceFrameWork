@@ -15,6 +15,7 @@
   "author": "Hussein Abdallah",
   "license": "ISC",
   "devDependencies": {
+    "auth0-js": "^9.10.2",
     "cypress": "^3.2.0",
     "cypress-commands": "^0.1.1",
     "cypress-wait-until": "^1.2.1",

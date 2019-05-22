@@ -1,0 +1,9 @@
+{
+    "cartEmptyMessage": "Your cart is empty",
+    "invalidCouponData": "invalid123#@!",
+    "invalidCouponErrorMessage": "The coupon code you entered couldn't be applied to any items in your order.",
+    "validCouponData": "E910A4578640BD0",
+    "couponRemoveButton": "Remove",
+    "couponCodeLabel": "Coupon Code",
+    "checkoutButton": "Checkout"
+}

@@ -1,0 +1,11 @@
+{
+    "productTitle": "h1",
+    "productThumbnailList": ".productView-thumbnails",
+    "productThumbnails": ".productView-images li img",
+    "productThumbnailsLinks": ".productView-images li a",
+    "mainImage": "figure.productView-image img.productView-image--default",
+    "productCard": "#product-listing-container ul>li.product",
+    "addToCartForm": "#form-action-addToCart",
+    "productPrice": "[data-product-price-without-tax]",
+    "CategoryProductCard": "#product-listing-container ul>li.product a"
+}

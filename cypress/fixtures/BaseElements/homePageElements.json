@@ -1,0 +1,7 @@
+{
+    "searchInputElement": "#search_query-main-header",
+    "emptySearchHeader": "h4",
+    "copyrightMessageElement": "footer p",
+    "footerSocialElement": "footer ul.socialLinks>li>a"
+
+}

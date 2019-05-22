@@ -1,69 +1,88 @@
 describe('Functionality Tests', function() {
     before (() => {
-        cy.clearCookie('SHOP_SESSION_TOKEN')
-        //https://www.jpbbox.com/
-        //https://gregnormancollection.com/
-        //https://www.trainingmask.com/
-        //https://groupaeng.arcticleaf.co/
         cy.visit("") 
+        cy.fixture("BaseElements/productElements", {timeout: 30000}).as("productElements");
+        cy.fixture("BaseElements/homePageElements", {timeout: 30000}).as("homePageElements");
+        cy.fixture("Data/productData", {timeout: 30000}).as("productData");
+        cy.fixture("Data/homePageData", {timeout: 30000}).as("homePageData");
         
+       
     });
 
     beforeEach(() => {
-        cy.fixture("product").as("product");
-        cy.fixture("messages").as("messages");
+
     });
 
     context('Search Functionality Tests', () => {
-        it('Locate & Submit the search form', function() {
-            cy.get('header a[data-search="quickSearch"]')
-            .then (($search) =>{
-                if ($search.attr('aria-expanded')==='false') {
-                    $search.click()
-                    cy.get('#search_query-dropdown')
-                    .and('be.visible')
-                    .type(this.product[0].productTitle)
-                    .type('{enter}')
-                } else {
-                    cy.get('#search_query-nav')
-                    .type(this.product[0].productTitle)
-                    .type('{enter}')
-                }
-            });
-            
+
+        it('Submit empty search form and verify Error inline message', function() {
+            cy.get(this.homePageElements.searchInputElement)
+            .type(' ')
+            .type('{enter}', {timeout:60000})
+            cy.get(this.homePageElements.emptySearchHeader).contains(this.homePageData.emptySearch)
+            .should('be.visible')
         });
 
-        it('Verify the product is available in the search results', function() {
-            cy.get('a').contains(this.product[0].productTitle)
+        it('Search for a Product', function() {
+            cy.get(this.homePageElements.searchInputElement)
+            .type(this.productData.productTitle)
+            .type('{enter}')
+        });
+
+        it('verify product in the search result and click on it', function() {
+            cy.get('a').contains(this.productData.productTitle)
             .should('be.visible')
             .click()
         });
 
-        it('Access and verify the product details page', function() {
-            cy.get('h1').contains(this.product[0].productTitle)
+        it('verify the clicked product in the search is the same opened Url', function() {
+            cy.get(this.productElements.productTitle).contains(this.productData.productTitle)
             .should('be.visible')
+            cy.url().should('include', this.productData.productUrl)
         });
 
-        it('locate & submit empty search form', function() {
-            cy.get('header a[data-search="quickSearch"]')
-            .then (($search) =>{
-                if ($search.attr('aria-expanded')==='false') {
-                    $search.click()
-                    cy.get('#search_query-dropdown')
-                    .and('be.visible')
-                    .type(' ')
-                    .type('{enter}')
+        
+
+    })
+
+    context('Product Page functionality', ()=>{
+        it('Verify image changes based on selected thumbnail', function() {
+            cy.get('body').then (($body) =>{
+                if ($body.find(this.productElements.productThumbnailList).length) {
+                    cy.get(this.productElements.productThumbnails).then (($lis) =>{
+                        var thumb
+                        thumb = Math.floor(Math.random() * ($lis.length))
+                        cy.get(this.productElements.productThumbnailsLinks).eq(thumb)
+                        .click()
+                        .invoke('attr','href').then(($imagesrc)=>{
+                            cy.get(this.productElements.mainImage).should('have.attr','src',$imagesrc)
+                        })                    
+                    })
                 } else {
-                    cy.get('#search_query-nav')
-                    .type(' ')
-                    .type('{enter}')
-                }
-            });
-        });
+                    cy.log('Thumbnails aren\'t available')
+            }
+        })
+        })
+    })
 
-        it('Verify inline message', function() {
-            cy.get('h4').contains(this.messages.emptySearch)
+
+    context('Footer Test', ()=>{
+        it('Verify Footer visibility', function() {
+            cy.get('footer').should('be.visible')
+        }); 
+    
+        it('Check Copyright message', function() {
+            cy.get(this.homePageElements.copyrightMessageElement).last().invoke('text').should('contain', this.homePageData.copyrightMessage)
+        });
+    
+        it('Check Social Media Icons visibility and log URLs', function() {
+            cy.get(this.homePageElements.footerSocialElement)
+            .each(($li)=>{
+                cy.task('log',$li.text())
+                cy.task('log',$li.attr('href'))
+            })
             .should('be.visible')
         });
     })
+
 })
