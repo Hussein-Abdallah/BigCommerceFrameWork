@@ -1,8 +1,8 @@
 
-describe.skip('Login.php Functionality Automation Tests - Login, Logout, Reset, Register', function() {
+describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Register', function() {
 
     before (() => {
-        cy.visit("", {requestTimeout: 60000})
+        cy.visit('')
         cy.accessAccountPage({timeout: 60000});
         cy.fixture("BaseElements/loginElements", {timeout: 30000}).as("loginElements");
         cy.fixture("BaseElements/forgetPasswordElements", {timeout: 30000}).as("forgetPasswordElements");
@@ -276,7 +276,7 @@ describe.skip('Login.php Functionality Automation Tests - Login, Logout, Reset, 
 
             it('Confirm New User Registeration by Signing In NewUser', function() {
                 cy.logout();
-                cy.loginPage()
+                cy.accessAccountPage()
                 cy.signIn({email: this.users.newUser.email, password: this.users.newUser.password });
                 cy.url().should('include', 'account.php')
                 verifyTextContent(this.myAccountElements.accountPageHeading, this.myAccountData.accountPageHeading)

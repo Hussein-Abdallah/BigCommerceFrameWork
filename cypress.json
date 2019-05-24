@@ -1,11 +1,12 @@
 {
   "projectId": "164wn9",
-  "requestBaseUrl": "https://login.bigcommerce.com",
+  "baseUrl": "https://preview.arcticleaf.co/pusehjx/staging/",
   "blacklistHosts": "www.google-analytics.com, *google.com",
   "chromeWebSecurity": false,
+  "defaultCommandTimeout": 6000,
   "reporter": "mochawesome",
   "reporterOptions": {
-    "reportDir": "cypress/results/",
+    "reportDir": "mochawesome-report",
     "overwrite": false,
     "html": false,
     "json": true

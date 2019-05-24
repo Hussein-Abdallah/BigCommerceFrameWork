@@ -16,7 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "auth0-js": "^9.10.2",
-    "cypress": "^3.2.0",
+    "cypress": "^3.3.1",
     "cypress-commands": "^0.1.1",
     "cypress-wait-until": "^1.2.1",
     "cypress-xpath": "^1.4.0",

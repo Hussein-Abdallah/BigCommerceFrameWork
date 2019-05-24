@@ -1,0 +1,16 @@
+{
+    "invalidCouponData": "invalid123#@!",
+    "invalidCouponErrorMessage": "The gift certificate or coupon code is invalid",
+    "validCouponData": "E910A4578640BD0",
+    "firstNameError": "First Name is required",
+    "lastNameError": "Last Name is required",
+    "addressError": "Address is required",
+    "cityError": "City is required",
+    "stateError": "State/Province is required",
+    "postalCodeError": "Postal Code is required",
+    "phoneError": "Phone Number is required",
+    "creditCardNumberError": "Credit Card Number is required",
+    "creditCardExpiryError": "Expiration Date is required",
+    "creditCardNameError": "Full name is required",
+    "creditCardCVVError": "CVV is required"
+}

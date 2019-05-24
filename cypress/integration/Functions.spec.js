@@ -1,6 +1,6 @@
 describe('Functionality Tests', function() {
     before (() => {
-        cy.visit("") 
+        cy.visit('') 
         cy.fixture("BaseElements/productElements", {timeout: 30000}).as("productElements");
         cy.fixture("BaseElements/homePageElements", {timeout: 30000}).as("homePageElements");
         cy.fixture("Data/productData", {timeout: 30000}).as("productData");
@@ -32,11 +32,11 @@ describe('Functionality Tests', function() {
         it('verify product in the search result and click on it', function() {
             cy.get('a').contains(this.productData.productTitle)
             .should('be.visible')
-            .click()
+            .click({force:true})
         });
 
         it('verify the clicked product in the search is the same opened Url', function() {
-            cy.get(this.productElements.productTitle).contains(this.productData.productTitle)
+            cy.get(this.productElements.productTitle, {timeout: 60000}).contains(this.productData.productTitle)
             .should('be.visible')
             cy.url().should('include', this.productData.productUrl)
         });
@@ -72,7 +72,7 @@ describe('Functionality Tests', function() {
         }); 
     
         it('Check Copyright message', function() {
-            cy.get(this.homePageElements.copyrightMessageElement).last().invoke('text').should('contain', this.homePageData.copyrightMessage)
+            cy.get(this.homePageElements.copyrightMessageElement).invoke('text').should('contain', this.homePageData.copyrightMessage)
         });
     
         it('Check Social Media Icons visibility and log URLs', function() {

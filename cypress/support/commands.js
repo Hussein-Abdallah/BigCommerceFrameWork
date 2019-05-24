@@ -30,18 +30,7 @@ Cypress.Commands.add("signIn", ({email, password}) => {
 
  Cypress.Commands.add("logout", () => { 
 
-    cy.get('.navUser a').then(($a) => { 
-
-        if ($a.text().includes('Sign Out')) {
-            cy.get('.navUser a').contains('Sign Out').should('have.attr', 'href', '/login.php?action=logout').click({force:true, timeout: 6000})
-        } else if ($a.text().includes('Sign out')) { 
-            cy.get('.navUser a').contains('Sign out').should('have.attr', 'href', '/login.php?action=logout').click({force:true, timeout: 6000})
-        } else if ($a.text().includes('Logout')) { 
-            cy.get('.navUser a').contains('Logout').should('have.attr', 'href', '/login.php?action=logout').click({force:true, timeout: 6000})
-        } else {
-            cy.get('.navUser a').contains('LOGOUT').should('have.attr', 'href', '/login.php?action=logout').click({force:true, timeout: 6000})
-        }
-    })
+    cy.get('a[href="/login.php?action=logout"]').click({force:true, timeout: 6000})
  })
 
 

@@ -1,0 +1,252 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 0,
+    "passes": 0,
+    "pending": 0,
+    "failures": 0,
+    "start": "2019-05-23T16:00:52.485Z",
+    "end": "2019-05-23T16:00:52.702Z",
+    "duration": 217,
+    "testsRegistered": 8,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 1,
+    "hasOther": true,
+    "skipped": 8,
+    "hasSkipped": true,
+    "passPercentClass": "danger",
+    "pendingPercentClass": "danger"
+  },
+  "suites": {
+    "uuid": "30cf4639-9aaa-466f-a71a-12575d69b3bc",
+    "title": "",
+    "fullFile": "",
+    "file": "",
+    "beforeHooks": [],
+    "afterHooks": [],
+    "tests": [],
+    "suites": [
+      {
+        "uuid": "8cc2b7e0-727e-462e-b350-d834ff8ae0a9",
+        "title": "Functionality Tests",
+        "fullFile": "",
+        "file": "",
+        "beforeHooks": [],
+        "afterHooks": [],
+        "tests": [],
+        "suites": [
+          {
+            "uuid": "a7a7a05d-c998-49e6-a146-99ab1ed2b697",
+            "title": "Search Functionality Tests",
+            "fullFile": "",
+            "file": "",
+            "beforeHooks": [],
+            "afterHooks": [],
+            "tests": [
+              {
+                "title": "Submit empty search form and verify Error inline message",
+                "fullTitle": "Functionality Tests Search Functionality Tests Submit empty search form and verify Error inline message",
+                "duration": 178,
+                "state": "failed",
+                "pass": false,
+                "fail": true,
+                "pending": false,
+                "code": "cy.get(this.homePageElements.searchInputElement).type(' ').type('{enter}', {\n  timeout: 60000\n});\ncy.get(this.homePageElements.emptySearchHeader).contains(this.homePageData.emptySearch).should('be.visible');",
+                "err": {
+                  "message": "CypressError: cy.visit() failed trying to load:\n\nWe failed looking for this file at the path:\n\n/Users/husseinabdallah/Desktop/HybridFramework/BigCommerceFrameWork/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n\nBecause this error occurred during a 'before all' hook we are skipping the remaining tests in the current suite: 'Functionality Tests'",
+                  "estack": "CypressError: cy.visit() failed trying to load:\n\nWe failed looking for this file at the path:\n\n/Users/husseinabdallah/Desktop/HybridFramework/BigCommerceFrameWork/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n\nBecause this error occurred during a 'before all' hook we are skipping the remaining tests in the current suite: 'Functionality Tests'\n    at Object.cypressErr (http://localhost:57635/__cypress/runner/cypress_runner.js:65727:11)\n    at Object.throwErr (http://localhost:57635/__cypress/runner/cypress_runner.js:65692:18)\n    at Object.throwErrByPath (http://localhost:57635/__cypress/runner/cypress_runner.js:65719:17)\n    at http://localhost:57635/__cypress/runner/cypress_runner.js:56262:31\n    at visitFailedByErr (http://localhost:57635/__cypress/runner/cypress_runner.js:55840:12)\n    at http://localhost:57635/__cypress/runner/cypress_runner.js:56243:22\n    at tryCatcher (http://localhost:57635/__cypress/runner/cypress_runner.js:131273:23)\n    at Promise._settlePromiseFromHandler (http://localhost:57635/__cypress/runner/cypress_runner.js:129291:31)\n    at Promise._settlePromise (http://localhost:57635/__cypress/runner/cypress_runner.js:129348:18)\n    at Promise._settlePromise0 (http://localhost:57635/__cypress/runner/cypress_runner.js:129393:10)\n    at Promise._settlePromises (http://localhost:57635/__cypress/runner/cypress_runner.js:129468:18)\n    at Async._drainQueue (http://localhost:57635/__cypress/runner/cypress_runner.js:126197:16)\n    at Async._drainQueues (http://localhost:57635/__cypress/runner/cypress_runner.js:126207:10)\n    at Async.drainQueues (http://localhost:57635/__cypress/runner/cypress_runner.js:126081:14)\n    at <anonymous>"
+                },
+                "isRoot": false,
+                "uuid": "38525d5e-4b1e-4236-939d-e64eb23cbc3b",
+                "isHook": false,
+                "skipped": false
+              },
+              {
+                "title": "Search for a Product",
+                "fullTitle": "Functionality Tests Search Functionality Tests Search for a Product",
+                "duration": 0,
+                "state": "skipped",
+                "pass": false,
+                "fail": false,
+                "pending": false,
+                "code": "cy.get(this.homePageElements.searchInputElement).type(this.productData.productTitle).type('{enter}');",
+                "err": {},
+                "isRoot": false,
+                "uuid": "acf4dd74-4bd4-4312-8033-e888da5ec1c7",
+                "isHook": false,
+                "skipped": true
+              },
+              {
+                "title": "verify product in the search result and click on it",
+                "fullTitle": "Functionality Tests Search Functionality Tests verify product in the search result and click on it",
+                "duration": 0,
+                "state": "skipped",
+                "pass": false,
+                "fail": false,
+                "pending": false,
+                "code": "cy.get('a').contains(this.productData.productTitle).should('be.visible').click();",
+                "err": {},
+                "isRoot": false,
+                "uuid": "7546c8e6-b3ba-4d18-bc58-67b02d53631a",
+                "isHook": false,
+                "skipped": true
+              },
+              {
+                "title": "verify the clicked product in the search is the same opened Url",
+                "fullTitle": "Functionality Tests Search Functionality Tests verify the clicked product in the search is the same opened Url",
+                "duration": 0,
+                "state": "skipped",
+                "pass": false,
+                "fail": false,
+                "pending": false,
+                "code": "cy.get(this.productElements.productTitle).contains(this.productData.productTitle).should('be.visible');\ncy.url().should('include', this.productData.productUrl);",
+                "err": {},
+                "isRoot": false,
+                "uuid": "46f2abb5-ba10-49f9-bdf3-0be8a0e51b56",
+                "isHook": false,
+                "skipped": true
+              }
+            ],
+            "suites": [],
+            "passes": [],
+            "failures": [
+              "38525d5e-4b1e-4236-939d-e64eb23cbc3b"
+            ],
+            "pending": [],
+            "skipped": [
+              "acf4dd74-4bd4-4312-8033-e888da5ec1c7",
+              "7546c8e6-b3ba-4d18-bc58-67b02d53631a",
+              "46f2abb5-ba10-49f9-bdf3-0be8a0e51b56"
+            ],
+            "duration": 178,
+            "root": false,
+            "rootEmpty": false,
+            "_timeout": 2000
+          },
+          {
+            "uuid": "f9e9ed1f-3b3e-4c55-b25d-15a62ed01ff7",
+            "title": "Product Page functionality",
+            "fullFile": "",
+            "file": "",
+            "beforeHooks": [],
+            "afterHooks": [],
+            "tests": [
+              {
+                "title": "Verify image changes based on selected thumbnail",
+                "fullTitle": "Functionality Tests Product Page functionality Verify image changes based on selected thumbnail",
+                "duration": 0,
+                "state": "skipped",
+                "pass": false,
+                "fail": false,
+                "pending": false,
+                "code": "var _this = this;\ncy.get('body').then(function ($body) {\n  if ($body.find(_this.productElements.productThumbnailList).length) {\n    cy.get(_this.productElements.productThumbnails).then(function ($lis) {\n      var thumb;\n      thumb = Math.floor(Math.random() * $lis.length);\n      cy.get(_this.productElements.productThumbnailsLinks).eq(thumb).click().invoke('attr', 'href').then(function ($imagesrc) {\n        cy.get(_this.productElements.mainImage).should('have.attr', 'src', $imagesrc);\n      });\n    });\n  } else {\n    cy.log('Thumbnails aren\\'t available');\n  }\n});",
+                "err": {},
+                "isRoot": false,
+                "uuid": "9c8b6f2e-e949-491f-9815-a4cf04bcf2c1",
+                "isHook": false,
+                "skipped": true
+              }
+            ],
+            "suites": [],
+            "passes": [],
+            "failures": [],
+            "pending": [],
+            "skipped": [
+              "9c8b6f2e-e949-491f-9815-a4cf04bcf2c1"
+            ],
+            "duration": 0,
+            "root": false,
+            "rootEmpty": false,
+            "_timeout": 2000
+          },
+          {
+            "uuid": "4cfd2b59-1c65-4d87-8918-aa9f26d554d2",
+            "title": "Footer Test",
+            "fullFile": "",
+            "file": "",
+            "beforeHooks": [],
+            "afterHooks": [],
+            "tests": [
+              {
+                "title": "Verify Footer visibility",
+                "fullTitle": "Functionality Tests Footer Test Verify Footer visibility",
+                "duration": 0,
+                "state": "skipped",
+                "pass": false,
+                "fail": false,
+                "pending": false,
+                "code": "cy.get('footer').should('be.visible');",
+                "err": {},
+                "isRoot": false,
+                "uuid": "1330f945-d78a-421c-bef0-2b08a3110c37",
+                "isHook": false,
+                "skipped": true
+              },
+              {
+                "title": "Check Copyright message",
+                "fullTitle": "Functionality Tests Footer Test Check Copyright message",
+                "duration": 0,
+                "state": "skipped",
+                "pass": false,
+                "fail": false,
+                "pending": false,
+                "code": "cy.get(this.homePageElements.copyrightMessageElement).last().invoke('text').should('contain', this.homePageData.copyrightMessage);",
+                "err": {},
+                "isRoot": false,
+                "uuid": "65cbd394-d64a-4346-997d-b353c42fb98f",
+                "isHook": false,
+                "skipped": true
+              },
+              {
+                "title": "Check Social Media Icons visibility and log URLs",
+                "fullTitle": "Functionality Tests Footer Test Check Social Media Icons visibility and log URLs",
+                "duration": 0,
+                "state": "skipped",
+                "pass": false,
+                "fail": false,
+                "pending": false,
+                "code": "cy.get(this.homePageElements.footerSocialElement).each(function ($li) {\n  cy.task('log', $li.text());\n  cy.task('log', $li.attr('href'));\n}).should('be.visible');",
+                "err": {},
+                "isRoot": false,
+                "uuid": "5bb00e5d-1bd0-4f90-86f9-1152a3cbb7fa",
+                "isHook": false,
+                "skipped": true
+              }
+            ],
+            "suites": [],
+            "passes": [],
+            "failures": [],
+            "pending": [],
+            "skipped": [
+              "1330f945-d78a-421c-bef0-2b08a3110c37",
+              "65cbd394-d64a-4346-997d-b353c42fb98f",
+              "5bb00e5d-1bd0-4f90-86f9-1152a3cbb7fa"
+            ],
+            "duration": 0,
+            "root": false,
+            "rootEmpty": false,
+            "_timeout": 2000
+          }
+        ],
+        "passes": [],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 0,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 2000
+      }
+    ],
+    "passes": [],
+    "failures": [],
+    "pending": [],
+    "skipped": [],
+    "duration": 0,
+    "root": true,
+    "rootEmpty": true,
+    "_timeout": 2000
+  },
+  "copyrightYear": 2019
+}

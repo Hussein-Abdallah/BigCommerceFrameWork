@@ -26,10 +26,12 @@
             "catchPhrase": "IT Company"
         },
         "comment": "This is a test Order.",
-        "cardNumber": "4111111111111111",
-        "expiration": "1022",
-        "cardName": "Arctic Leaf",
-        "cvv": "123"
+        "creditCard": {
+            "creditCardNumber": "4111111111111111",
+            "creditCardExpiry": "1022",
+            "creditCardName": "Test Order",
+            "creditCardCVV": "123"
+        }
     },
     "unregisteredUser": {
         "id": 2,
@@ -39,29 +41,31 @@
         "email": "testcustomer101@arcticleaf.io",
         "password": "password1",
         "address": {
-            "street": "Cooper Street",
-            "suite": "Apt. 901",
+            "street": "8 Rancho Circle",
+            "suite": " ",
             "address2": " ",
-            "city": "Ottawa",
-            "country": "Canada",
-            "state": "Ontario",
-            "postalCode": "K2P 2H8",
+            "city": "Lake Forest",
+            "country": "United States",
+            "state": "California",
+            "postalCode": "92630",
             "geo": {
                 "lat": "-37.3159",
                 "lng": "81.1496"
             }
         },
-        "phone": "6135198501",
+        "phone": "(949)377-1301",
         "website": "https://arcticleaf.io",
         "company": {
             "name": "Arctic Leaf",
             "catchPhrase": "IT Company"
         },
         "comment": "This is a test Order.",
-        "cardNumber": "4111111111111111",
-        "expiration": "1022",
-        "cardName": "Test Order",
-        "cvv": "123"
+        "creditCard": {
+            "creditCardNumber": "4111111111111111",
+            "creditCardExpiry": "1022",
+            "creditCardName": "Test Order",
+            "creditCardCVV": "123"
+        }
     },
     "newUser": {
         "id": 3,
@@ -90,12 +94,15 @@
             "catchPhrase": "IT Company"
         },
         "comment": "This is a test order.",
-        "cardNumber": "4111111111111111",
-        "expiration": "1022",
-        "cardName": "Arctic Leaf",
-        "cvv": "123"
+        "creditCard": {
+            "creditCardNumber": "4111111111111111",
+            "creditCardExpiry": "1022",
+            "creditCardName": "Test Order",
+            "creditCardCVV": "123"
+        }
     },
     "invalidUser": {
-        "email": "john.smith#arcticleaf.io","password": "321321321"
+        "email": "john.smith#arcticleaf.io",
+        "password": "321321321"
     }
 }
