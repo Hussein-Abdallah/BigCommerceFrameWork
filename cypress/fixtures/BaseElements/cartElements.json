@@ -5,7 +5,7 @@
     "cartDropdownElement": "#cart-preview-dropdown",
     "dropdownViewCartButton": ".previewCartAction-viewCart > .button",
     "productTitleDropdownCart": ".previewCartItem-name",
-    "cartBadge": ".cart-quantity",
+    "cartBadge": "span.cart-quantity",
     "cartDropdownHeaderVisibility": "#cart-preview-dropdown .previewCartHeader",
     "productQuantity": ".form-input--incrementTotal",
     "productTotalPrice": ".cart-item-total span.cart-item-value",
@@ -22,5 +22,6 @@
     "grandTotal": ".cart-grandTotal > .cart-total-value > span",
     "removeAppliedCoupon": ".cart-total-label > div > a",
     "couponCodeLabel": ".coupon-certificate .cart-total-label",
-    "checkoutButton": ".cart-actions-top .button--primary"
+    "checkoutButton": ".cart-actions-top .button--primary",
+    "increaseQty": "button[data-action='inc']"
 }

@@ -1,5 +1,7 @@
 describe('Functionality Tests', function() {
     before (() => {
+        cy.clearCookie('SHOP_SESSION_TOKEN')
+
         cy.visit('') 
         cy.fixture("BaseElements/productElements", {timeout: 30000}).as("productElements");
         cy.fixture("BaseElements/homePageElements", {timeout: 30000}).as("homePageElements");
@@ -76,12 +78,14 @@ describe('Functionality Tests', function() {
         });
     
         it('Check Social Media Icons visibility and log URLs', function() {
+
             cy.get(this.homePageElements.footerSocialElement)
             .each(($li)=>{
+
                 cy.task('log',$li.text())
-                cy.task('log',$li.attr('href'))
+                expect($li).to.be.visible
+
             })
-            .should('be.visible')
         });
     })
 

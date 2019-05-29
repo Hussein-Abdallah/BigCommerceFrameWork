@@ -2,6 +2,8 @@
 describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Register', function() {
 
     before (() => {
+        cy.clearCookie('SHOP_SESSION_TOKEN')
+
         cy.visit('')
         cy.accessAccountPage({timeout: 60000});
         cy.fixture("BaseElements/loginElements", {timeout: 30000}).as("loginElements");
@@ -173,7 +175,11 @@ describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Regis
             });
 
             it('Phone Number', function() {
-                verifyFieldAttributes(this.registerElements.phoneInput, this.registerElements.phoneLabel)
+                cy.get(this.registerElements.phoneInput).then(($el)=>{
+                    if($el.attr('required') === 'required') {
+                    verifyFieldAttributes(this.registerElements.phoneInput, this.registerElements.phoneLabel)
+                    }
+                })
             });
         })
         

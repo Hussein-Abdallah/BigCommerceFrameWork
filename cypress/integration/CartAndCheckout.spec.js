@@ -34,7 +34,7 @@ describe('Functionality Tests '+i, function() {
         cy.clearCookie('SHOP_SESSION_TOKEN')
     })
 
-    context.skip('Cart functionality', () => {
+    context('Cart functionality', () => {
         it('Verify Cart is empty', function() {
             cy.get(this.cartElements.cartElement, {timeout: 30000})
             .click()
@@ -57,7 +57,7 @@ describe('Functionality Tests '+i, function() {
         it('Verify if Size option is available', function() {
             cy.get('form[data-cart-item-add]')
             .then (($options) =>{
-                if ($options.find('[data-product-attribute-name="Size"][type="radio"] ').length) {
+                if ($options.find('fieldset[data-product-attribute-name="Size"]  [type="radio"]').length) {
                     cy.get('[data-product-attribute-name="Size"] [type="radio"]').then(($sizeOptions) =>{
                         var sxl = $sizeOptions.length
                         var sizes2 = Math.floor(Math.random() * ($sizeOptions.length-1)) 
@@ -108,15 +108,12 @@ describe('Functionality Tests '+i, function() {
 
                 cy.get(this.cartElements.cartElement).then(($dropdownCart)=>{
                     if ($dropdownCart.attr('aria-expanded')==='true'){
-                        cy.get(this.productElements.productTitle).then(($productName)=>{
                             cy.get(this.cartElements.productTitleDropdownCart).should('contain', productTitle)
-                        })
+                        
                     } else {
 
-                        cy.get(this.productElements.productTitle).then(($productName)=>{
                             cy.get(this.cartElements.cartElement).click()
                             cy.get(this.cartElements.productTitleDropdownCart).should('contain', productTitle)
-                        })
                     }
                 
                 });
@@ -143,6 +140,7 @@ describe('Functionality Tests '+i, function() {
 
         /* Adding same product one more time. */
         it('Add same product one more', function() {
+            var size, color
             cy.location().then((loc) => {
                 if(loc.pathname !== '/cart.php'){
                     cy.visit('cart.php')
@@ -153,22 +151,28 @@ describe('Functionality Tests '+i, function() {
                 if ($body.find('.definitionList').length){
                     cy.get('.definitionList').then(($list) =>{
                         if ($list.find('.definitionList-key').text().includes('Size')){
-                            var size = $list.find('.definitionList-value').first().text()
-                            size = size.replace(/\s/g,''); 
+                            cy.get('.definitionList-key').contains('Size').next().then(($el)=>{
+                                size = $el.text()
+                                size = size.replace(/\s/g,''); 
+                                cy.log(size)
+                            })
                         }
                         if ($list.find('.definitionList-key').text().includes('Color')){
-                            var color = $list.find('.definitionList-value').last().text()
-                            color = color.replace(/\s/g,''); 
+                            cy.get('.definitionList-key').contains('Color').next().then(($el)=>{
+                                color = $el.text()
+                                color = color.replace(/\s/g,''); 
+                                cy.log(color)
+                            })
+                            
                         }
     
                         cy.get('.cart-item-name > a')
                         .click()
     
                         cy.get('form[data-cart-item-add]').then (($options) =>{
-                            if ($options.find('[data-product-attribute-name="Size"][type="radio"] ').length) {
-                                cy.get('[data-product-attribute-name="Size"] [type="radio"]').then(($sizeOptions) =>{
-                                    cy.get('[data-product-attribute-name="Size"] [type="radio"]').check(size, {force:true})
-                                })
+                            if ($options.find('[data-product-attribute-name="Size"] [type="radio"]').length) {
+                                    cy.get('[data-product-attribute-name="Size"] span[title="'+size+'"]').parent().prev().check({force:true})
+
                             } else if ($options.find('[data-product-attribute-name="Size"]>select>option').length){
                                         cy.get('[data-product-attribute-name="Size"]>select')
                                         .select(size, {force:true})
@@ -179,12 +183,7 @@ describe('Functionality Tests '+i, function() {
                         })
                         cy.get('form[data-cart-item-add]').then (($options) =>{
                             if ($options.find('[data-product-attribute-name="Color"]').length) {
-                                cy.get('[data-product-attribute-name="Color"] [type="radio"]').then(($colorOptions) =>{
-                                    cy.get('[title='+color+']').parent('label').then(($colorVal)=>{
-                                        var cValue = $colorVal.attr('data-product-attribute-value')
-                                        cy.get('[data-product-attribute-name="Color"] [type="radio"]').check(cValue, {force:true})
-                                    })
-                                })
+                                    cy.get('[data-product-attribute-name="Color"] span[title="'+color+'"]').parent().prev().check({force:true})
                             } else {
                                 cy.log('Color option is not available')
                             }
@@ -219,7 +218,7 @@ describe('Functionality Tests '+i, function() {
                     .should('have.value', '2')
     
                     cy.get(this.cartElements.productTotalPrice)
-                    .should('have.text', '$'+price*2)   
+                    .should('contain', '$'+price*2)   
                 })
 
             })
@@ -229,6 +228,16 @@ describe('Functionality Tests '+i, function() {
             cy.get(this.cartElements.cartBadge)
             .then (($cartQty) =>{
                 expect($cartQty).to.have.text('2')
+            })   
+        })
+
+        it('Increase Qunatity from cart page and verify Badge', function(){
+
+            cy.get(this.cartElements.increaseQty).click()
+            cy.wait(3000)
+            cy.get(this.cartElements.cartBadge)
+            .then (($cartQty) =>{
+                expect($cartQty).to.have.text('3')
             })   
         })
 
@@ -296,9 +305,8 @@ describe('Functionality Tests '+i, function() {
                 .click({force:true, timeout:60000})
             });
             it('Verify if Size option is available', function() {
-                cy.get('form[data-cart-item-add]')
-                .then (($options) =>{
-                    if ($options.find('[data-product-attribute-name="Size"][type="radio"] ').length) {
+                cy.get('form[data-cart-item-add]').then (($options) =>{
+                    if ($options.find('fieldset[data-product-attribute-name="Size"]  [type="radio"]').length) {
                         cy.get('[data-product-attribute-name="Size"] [type="radio"]').then(($sizeOptions) =>{
                             var sxl = $sizeOptions.length
                             var sizes2 = Math.floor(Math.random() * ($sizeOptions.length-1)) 
@@ -324,8 +332,7 @@ describe('Functionality Tests '+i, function() {
             Verify Color option is avilable, select a random Color else log Color option is not available
             --------------------------------------------*/
             it('Verify if Color option is available', function() {
-                cy.get('form[data-cart-item-add]')
-                .then (($options) =>{
+                cy.get('form[data-cart-item-add]').then (($options) =>{
                     if ($options.find('[data-product-attribute-name="Color"]').length) {
                         cy.get('[data-product-attribute-name="Color"] [type="radio"]').then(($colorOptions) =>{
                             var sxl = $colorOptions.length
@@ -397,7 +404,10 @@ describe('Functionality Tests '+i, function() {
                 cy.get(this.checkoutElements.emailField).type(this.users.unregisteredUser.email)
                 cy.get(this.checkoutElements.guestCustomerSectionForm).submit()
                 cy.wait(1000)
-                cy.get(this.checkoutElements.customerSection).children().should('have.length', 0)
+                cy.waitUntil(()=> cy.get(this.checkoutElements.customerSection).children().should('have.length', 0),{
+                    timeout: 30000,
+                    interval: 500
+                })
                 cy.get(this.checkoutElements.shippingSection).children().then(($shipping)=>{
                     expect($shipping.length).to.be.greaterThan(0)
                 })
@@ -617,7 +627,10 @@ describe('Functionality Tests '+i, function() {
                 
                 cy.get(this.checkoutElements.customerSection).children().should('have.length', 0)
                 cy.get(this.checkoutElements.shippingSection).children().should('have.length',0)
-                cy.get(this.checkoutElements.billingSection).children().should('have.length',0)
+                cy.waitUntil(() => cy.get(this.checkoutElements.billingSection).children().should('have.length',0), {
+                    timeout: 8000,
+                    interval: 500
+                })
                 cy.waitUntil(() => cy.get(this.checkoutElements.paymentSection).children().then(($payment)=>{
                     expect($payment.length).to.be.greaterThan(0)
                 }), {
@@ -663,9 +676,8 @@ describe('Functionality Tests '+i, function() {
                 .click({force:true, timeout:60000})
             });
             it('Verify if Size option is available', function() {
-                cy.get('form[data-cart-item-add]')
-                .then (($options) =>{
-                    if ($options.find('[data-product-attribute-name="Size"][type="radio"] ').length) {
+                cy.get('form[data-cart-item-add]').then (($options) =>{
+                    if ($options.find('fieldset[data-product-attribute-name="Size"]  [type="radio"]').length) {
                         cy.get('[data-product-attribute-name="Size"] [type="radio"]').then(($sizeOptions) =>{
                             var sxl = $sizeOptions.length
                             var sizes2 = Math.floor(Math.random() * ($sizeOptions.length-1)) 
@@ -691,8 +703,7 @@ describe('Functionality Tests '+i, function() {
             Verify Color option is avilable, select a random Color else log Color option is not available
             --------------------------------------------*/
             it('Verify if Color option is available', function() {
-                cy.get('form[data-cart-item-add]')
-                .then (($options) =>{
+                cy.get('form[data-cart-item-add]').then (($options) =>{
                     if ($options.find('[data-product-attribute-name="Color"]').length) {
                         cy.get('[data-product-attribute-name="Color"] [type="radio"]').then(($colorOptions) =>{
                             var sxl = $colorOptions.length
@@ -724,8 +735,8 @@ describe('Functionality Tests '+i, function() {
                 cy.get(this.checkoutElements.emailField).type(this.users.registeredUser.email)
                 cy.get(this.checkoutElements.passwordField).type(this.users.registeredUser.password)
                 cy.get(this.checkoutElements.signInForm).submit()
-                cy.wait(500)
-                cy.get(this.checkoutElements.customerSection, {timeout: 20000}).children().should('have.length', 0)
+                cy.wait(1000)
+                cy.get(this.checkoutElements.customerSection, {timeout: 60000}).children().should('have.length', 0)
                 cy.get(this.checkoutElements.shippingSection).children().then(($shipping)=>{
                     expect($shipping.length).to.be.greaterThan(0)
                 })

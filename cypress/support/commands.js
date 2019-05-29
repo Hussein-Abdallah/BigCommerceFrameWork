@@ -30,7 +30,7 @@ Cypress.Commands.add("signIn", ({email, password}) => {
 
  Cypress.Commands.add("logout", () => { 
 
-    cy.get('a[href="/login.php?action=logout"]').click({force:true, timeout: 6000})
+    cy.get('a[href="/login.php?action=logout"]').click({force:true, timeout: 6000, multiple:true})
  })
 
 
@@ -95,32 +95,44 @@ Cypress.Commands.add("fillSelectForm", ({element, text}) => {
 
  Cypress.Commands.add("brokenLinks",()=>{
      
-    let name = this.test.fullTitle();
-    cy.writeFile(name+'.csv','ID, Name, Link, Locatio, Status\n', { encoding: 'utf-8'})
+    cy.writeFile('cypress/Link_Report/'+name+'.csv','ID, Name, Link, Status\n', { encoding: 'utf-8'})
     cy.get('a').each(function ($a, x =0) {
         x++
         var stat;
-        if ($a.attr('href') !== null && $a.attr('href') !== undefined && $a.attr('href') !== ""){
-
-            cy.request({url: $a.attr('href'), failOnStatusCode: false}).then((resp)=>{
-                stat = resp.status;
-
-                var link = $a.attr('href')
-                var linkText = $a.text().replace(/\,/g,"");
-                cy.writeFile(name+'.csv',x+","+linkText.trim()+","+link.trim()+","+stat+ '\n', { encoding: 'utf-8', flag: 'a+' })
-            })
-        } else {
-                if($a.attr('href') !== null) {
-                    stat = 'Null';
-                } else if ($a.attr('href') !== undefined) {
-                    stat = 'Undefined';
-                } else if ($a.attr('href') !== "") {
-                    stat = 'Empty URL'
+        var el = $a.attr('href')
+        
+            if (!el) {
+                cy.log('Empty URL')
+                cy.writeFile('cypress/Link_Report/'+name+'.csv',x+","+$a.text().replace(/\,/g,"").trim()+","+$a.attr('href')+', Empty URL \n', { encoding: 'utf-8', flag: 'a+' })
+            } else if(el.includes('tel') === false) {
+                if ($a.attr('href') !== null && $a.attr('href') !== undefined && $a.attr('href') !== ""){
+        
+                    cy.request({url: $a.attr('href'), failOnStatusCode: false}).then((resp)=>{
+                        stat = resp.status;
+                        if (stat >= 400){
+                            var link = $a.attr('href')
+                            cy.log(x)
+                            cy.log(link)
+                            var linkText = $a.text().replace(/\,/g,"");
+                            cy.writeFile('cypress/Link_Report/'+name+'.csv',x+","+linkText.trim()+","+link.trim()+","+stat+ '\n', { encoding: 'utf-8', flag: 'a+' })
+                        }
+                    })
                 } else {
-                    stat = 'Unknown Reason'
+                        if($a.attr('href') !== null) {
+                            stat = 'Null';
+                        } else if ($a.attr('href') !== undefined) {
+                            stat = 'Undefined';
+                        } else if ($a.attr('href') !== "") {
+                            stat = 'Empty URL'
+                        } else {
+                            stat = 'Unknown Reason'
+                        }
+                    cy.writeFile('cypress/Link_Report/'+name+'.csv',x+","+$a.text().replace(/\,/g,"").trim()+","+$a.attr('href')+', Null \n', { encoding: 'utf-8', flag: 'a+' })
+                
                 }
-            cy.writeFile(name+'.csv',x+","+$a.text().replace(/\,/g,"").trim()+","+$a.attr('href')+', Null \n', { encoding: 'utf-8', flag: 'a+' })
-        }
+            } else {
+                cy.log('This is a telephone URL')
+            }
     })
 
 
