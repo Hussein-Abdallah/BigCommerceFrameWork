@@ -211,6 +211,7 @@ var WinChan = (function() {
         addListener(window, 'message', onMessage);
 
         return {
+          originalPopup: w,
           close: cleanup,
           focus: function() {
             if (w) {

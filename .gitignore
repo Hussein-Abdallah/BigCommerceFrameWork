@@ -1,0 +1,8 @@
+# Ignore files and folders to be pushed to repository
+.DS_Store
+**/.DS_Store
+cypress/e2e/.DS_Store
+/node_modules
+/cypress/videos
+/cypress/screenshots
+/cypress/downloads

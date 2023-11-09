@@ -20,16 +20,16 @@
   "license": "ISC",
   "devDependencies": {
     "auth0-js": "^9.10.2",
-    "cypress": "^3.3.1",
+    "cypress": "^13.5.0",
     "cypress-commands": "^0.1.1",
     "cypress-wait-until": "^1.2.1",
     "cypress-xpath": "^1.4.0",
-    "mocha": "^5.2.0",
+    "mocha": "^10.2.0",
     "mocha-junit-reporter": "^1.22.0",
     "mocha-multi-reporters": "^1.1.7",
-    "mochawesome": "^3.1.2",
-    "mochawesome-merge": "^1.0.7",
-    "mochawesome-report-generator": "^3.1.5",
-    "npm": "^6.9.0"
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0",
+    "npm": "^10.2.3"
   }
 }

@@ -1,11 +1,13 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var path = require('path');
-var isFunction = require('lodash.isfunction');
+exports.getMergedOptions = exports.yargsOptions = void 0;
 
+var path = require('path');
+
+var isFunction = require('lodash.isfunction');
 /** CLI Arguments
  *
  * @argument {string} test-data Data to use for rendering report
@@ -17,7 +19,7 @@ var isFunction = require('lodash.isfunction');
  * @property {string}  assetsDir        Path to save report assets to (default: cwd/mochawesome-report/assets)
  * @property {boolean} inlineAssets     Should assets be inlined into HTML file (default: false)
  * @property {boolean} cdn              Should assets be loaded via CDN (default: false)
- * @property {boolean} charts           Should charts be enabled (default: true)
+ * @property {boolean} charts           Should charts be enabled (default: false)
  * @property {boolean} code             Should test code output be enabled (default: true)
  * @property {boolean} autoOpen         Open the report after creation (default: false)
  * @property {boolean} overwrite        Overwrite existing files (default: true)
@@ -41,7 +43,9 @@ var isFunction = require('lodash.isfunction');
  * @property {boolean} dev              Enable dev mode in the report,
  *                                      asssets loaded via webpack (default: false)
  */
-var yargsOptions = exports.yargsOptions = {
+
+
+var yargsOptions = {
   f: {
     alias: ['reportFilename'],
     describe: 'Filename of saved report',
@@ -91,7 +95,7 @@ var yargsOptions = exports.yargsOptions = {
   },
   charts: {
     alias: ['enableCharts'],
-    default: true,
+    default: false,
     describe: 'Display charts',
     boolean: true
   },
@@ -158,7 +162,6 @@ var yargsOptions = exports.yargsOptions = {
     boolean: true
   }
 };
-
 /**
  * Retrieve the value of a user supplied option.
  * Order of precedence
@@ -171,30 +174,37 @@ var yargsOptions = exports.yargsOptions = {
  *
  * @return {string|boolean|undefined}  Option value
  */
+
+exports.yargsOptions = yargsOptions;
+
 function _getUserOption(userOptions, optToGet, isBool) {
-  var envVar = 'MOCHAWESOME_' + optToGet.toUpperCase();
+  var envVar = "MOCHAWESOME_".concat(optToGet.toUpperCase());
+
   if (userOptions && typeof userOptions[optToGet] !== 'undefined') {
     return isBool && typeof userOptions[optToGet] === 'string' ? userOptions[optToGet] === 'true' : userOptions[optToGet];
   }
+
   if (typeof process.env[envVar] !== 'undefined') {
     return isBool ? process.env[envVar] === 'true' : process.env[envVar];
   }
+
   return undefined;
 }
-
 /*
  * Helper to create properties and assign values in an object.
  * Properties with `undefined` values are ignored. *mutative*
 
  * @param {object} obj Object to assign properties to
  */
+
+
 function assignVal(obj, prop, userVal, defaultVal) {
   var val = userVal !== undefined ? userVal : defaultVal;
+
   if (val !== undefined) {
-    obj[prop] = val;
+    obj[prop] = val; // eslint-disable-line
   }
 }
-
 /**
  * Return parsed user options merged with base config
  *
@@ -202,33 +212,35 @@ function assignVal(obj, prop, userVal, defaultVal) {
  *
  * @return {Object} Merged options
  */
-var getMergedOptions = exports.getMergedOptions = function getMergedOptions(userOptions) {
-  var mergedOptions = {};
 
+
+var getMergedOptions = function getMergedOptions(userOptions) {
+  var mergedOptions = {};
   Object.keys(yargsOptions).forEach(function (optKey) {
     var yargOpt = yargsOptions[optKey];
     var aliases = yargOpt.alias;
     var defaultVal = isFunction(yargOpt.default) ? yargOpt.default() : yargOpt.default;
     var isBool = yargOpt.boolean;
-    var userVal = _getUserOption(userOptions, optKey, isBool);
 
-    // Most options are single-letter so we add the aliases as properties
+    var userVal = _getUserOption(userOptions, optKey, isBool); // Most options are single-letter so we add the aliases as properties
+
+
     if (Array.isArray(aliases) && aliases.length) {
       // If the main prop does not have a user supplied value
       // we need to check the aliases, stopping if we get a user value
       if (userVal === undefined) {
         for (var i = 0; i < aliases.length; i += 1) {
           userVal = _getUserOption(userOptions, aliases[i], isBool);
+
           if (userVal !== undefined) {
             break;
           }
         }
-      }
+      } // Handle cases where the main option is not a single letter
 
-      // Handle cases where the main option is not a single letter
-      if (optKey.length > 1) assignVal(mergedOptions, optKey, userVal, defaultVal);
 
-      // Loop through aliases to set val
+      if (optKey.length > 1) assignVal(mergedOptions, optKey, userVal, defaultVal); // Loop through aliases to set val
+
       aliases.forEach(function (alias) {
         return assignVal(mergedOptions, alias, userVal, defaultVal);
       });
@@ -236,12 +248,13 @@ var getMergedOptions = exports.getMergedOptions = function getMergedOptions(user
       // For options without aliases, use the option regardless of length
       assignVal(mergedOptions, optKey, userVal, defaultVal);
     }
-  });
+  }); // Special handling for defining `assetsDir`
 
-  // Special handling for defining `assetsDir`
   if (!mergedOptions.assetsDir) {
     mergedOptions.assetsDir = path.join(mergedOptions.reportDir, 'assets');
   }
 
   return mergedOptions;
 };
+
+exports.getMergedOptions = getMergedOptions;
