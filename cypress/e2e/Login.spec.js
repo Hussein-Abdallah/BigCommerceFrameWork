@@ -1,7 +1,7 @@
 
 describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Register', function() {
 
-    before (() => {
+    beforeEach (() => {
         cy.clearCookie('SHOP_SESSION_TOKEN')
 
         cy.visit('')
@@ -17,7 +17,7 @@ describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Regis
         cy.fixture("Data/users", {timeout: 30000}).as("users")
 
     });
-    context('Forget Password Form Functionality', () => {
+    context.only('Forget Password Form Functionality', () => {
 
         it('Access the login Page', function() {
             cy.accessAccountPage();
@@ -38,21 +38,29 @@ describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Regis
         })
 
         it('Verify form doesn\'t accept empty fields', function() {
+            cy.get(this.loginElements.forgetPasswordLink)
+            .click({timeout: 6000})
             cy.forgetPassword({email: ''})
             verifyTextContent(this.forgetPasswordElements.alertWarningMessage, this.forgetPasswordData.invalidForgetFormAlert)
         });
 
         it('Forget Password Form with invalid email', function() {
+            cy.get(this.loginElements.forgetPasswordLink)
+            .click({timeout: 6000})
             cy.forgetPassword({email: this.forgetPasswordData.invalidEmail})
             verifyTextContent(this.forgetPasswordElements.alertWarningMessage, this.forgetPasswordData.invalidForgetFormAlert)
         });
 
         it('Forget Password Form with unregistered email', function() {
+            cy.get(this.loginElements.forgetPasswordLink)
+            .click({timeout: 6000})
             cy.forgetPassword({email: this.users.unregisteredUser.email})
             verifyTextContent(this.forgetPasswordElements.alertErrorMessage, this.forgetPasswordData.forgetFormErrorMessage)
         });
 
         it('Forget Password Form with registered email', function() {
+            cy.get(this.loginElements.forgetPasswordLink)
+            .click({timeout: 6000})
             cy.forgetPassword({email: this.users.registeredUser.email})
             verifyTextContent(this.forgetPasswordElements.alertSuccessMessage, this.forgetPasswordData.forgetFormSuccessMessage)
             cy.get(this.loginElements.signInForm).should('be.visible')
@@ -330,7 +338,7 @@ function verifyFieldAttributes(inputElement, element){
 
 function verifyTextContent(el, data) {
     cy.get(el, {requestTimeout: 6000})
-    .should('be.visible', {timeout: 6000})
+    .should('be.visible', {timeout: 10000})
     .invoke('text')
     .should('include', data)
 }

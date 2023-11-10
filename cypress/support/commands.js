@@ -58,7 +58,7 @@ Cypress.Commands.add("forgetPassword", ({email}) => {
     }
     cy.get('form.forgot-password-form').submit()
 
- });
+});
 
  //function to insert text into fields
 Cypress.Commands.add("fillInputForm", ({element, text}) =>{
@@ -88,7 +88,7 @@ Cypress.Commands.add("fillSelectForm", ({element, text}) => {
             .click({force:true, timeout:30000})
 
         }else {
-            cy.get('.navUser-item--account .navUser-action').click({force:true, timeout:30000})
+            cy.get('body > header > nav > ul > li.navUser-item.navUser-item--account > a:nth-child(1)').click({force:true, timeout:30000})
         }
     })    
  });
