@@ -15,16 +15,20 @@
     "addressLine1Input": "#FormField_8_input",
     "addressLine1Label": "#FormField_8",
     "addressLine2Input": "#FormField_9_input",
+    "addressLine2Label": "#FormField_9",
     "cityInput": "#FormField_10_input",
     "cityLabel": "#FormField_10",
     "countrySelect": "#FormField_11_select",
     "countryLabel": "#FormField_11",
-    "stateSelect": "#FormField_12_select",
+    "stateInput": "#FormField_12_input",
     "stateLabel": "#FormField_12 label",
     "phoneInput": "#FormField_7_input",
     "phoneLabel": "#FormField_7",
     "postalCodeInput": "#FormField_13_input",
     "companyNameInput": "#FormField_6_input",
+    "companyNameLabel": "#FormField_6",
+    "zipInput": "#FormField_13_input",
+    "zipLabel": "#FormField_13 label",
     "createdAccountPageHeading": ".page-heading"
     
 

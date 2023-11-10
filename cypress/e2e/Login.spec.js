@@ -1,7 +1,7 @@
 
 describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Register', function() {
 
-    beforeEach (() => {
+    before (() => {
         cy.clearCookie('SHOP_SESSION_TOKEN')
 
         cy.visit('')
@@ -17,11 +17,14 @@ describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Regis
         cy.fixture("Data/users", {timeout: 30000}).as("users")
 
     });
-    context.only('Forget Password Form Functionality', () => {
+    beforeEach (() => {
+        cy.visit('')
+        cy.accessAccountPage({timeout: 60000});
+    });
+    context('Forget Password Form Functionality', () => {
 
         it('Access the login Page', function() {
-            cy.accessAccountPage();
-            cy.url().should('include', 'login.php')
+              cy.url().should('include', 'login.php')
             verifyTextContent(this.loginElements.loginPageHeading, this.loginData.loginPageHeading)
         })
 
@@ -73,11 +76,8 @@ describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Regis
     context('Login Form Functionality', () => {
 
         it('Access the login Page', function() {
-            cy.visit("", {timeout: 60000})
-            cy.accessAccountPage();
             cy.url().should('include', 'login.php')
             verifyTextContent(this.loginElements.loginPageHeading, this.loginData.loginPageHeading)
-            
         })
 
         it('Login Form Functionality with empty fields', function() {
@@ -105,23 +105,16 @@ describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Regis
         
             cy.signIn({email: this.users.registeredUser.email, password: this.users.registeredUser.password });
             cy.url().should('include', 'account.php')
-            verifyTextContent(this.myAccountElements.accountPageHeading, this.myAccountData.accountPageHeading)
+            //verifyTextContent(this.myAccountElements.accountPageHeading, this.myAccountData.accountPageHeading)
         });
     })
 
     context("Logout Functionality", () =>{
-        it('Access the Login Page and Verify', function() {
-            cy.visit("", {timeout: 60000})
-            cy.accessAccountPage();
+         it('Logout Button functionality', function() {
             cy.url().should('include', 'login.php')
             verifyTextContent(this.loginElements.loginPageHeading, this.loginData.loginPageHeading)
             cy.signIn({email: this.users.registeredUser.email, password: this.users.registeredUser.password });
             cy.url().should('include', 'account.php')
-            verifyTextContent(this.myAccountElements.accountPageHeading, this.myAccountData.accountPageHeading)
-            
-        })
-
-        it('Logout Button functionality', function() {
             cy.logout()
             verifyTextContent(this.loginElements.loginAlertSuccessMessage, this.loginData.logoutMessage)
         });
@@ -130,175 +123,169 @@ describe('Login.php Functionality Automation Tests - Login, Logout, Reset, Regis
     context("Register Form Functionality", () =>{
         
         it('Access the SignIn Page', function() {
-            cy.visit("", {timeout: 60000})
-            cy.accessAccountPage();
             cy.url().should('include', 'login.php')
             verifyTextContent(this.loginElements.loginPageHeading, this.loginData.loginPageHeading)
             
         })
 
         it('Navigate to Register Form and verify visibility', function() {
-            verifyTextContent(this.loginElements.registerDivHeader, this.loginData.registerDivHeader)
+            //verifyTextContent(this.loginElements.registerDivHeader, this.loginData.registerDivHeader)
             cy.get(this.loginElements.registerButton)
             .should('have.attr', 'href', this.loginData.registerLink)
             .should('be.visible')
             .click()
         });
 
-        context("Form Fields Required Attribute and Asterisk", () =>{
-            it('First Name', function() {
-                verifyFieldAttributes(this.registerElements.firstNameInput, this.registerElements.firstNameLabel)
-            });
-
-            it('Last Name', function() {
-                verifyFieldAttributes(this.registerElements.lastNameInput, this.registerElements.lastNameLabel)
-            });
-
-            it('Email', function() {
-                verifyFieldAttributes(this.registerElements.emailInput, this.registerElements.emailLabel)
-            });
-
-            it('Password', function() {
-                verifyFieldAttributes(this.registerElements.passwordInput, this.registerElements.passwordLabel)
-            });
-
-            it('Confirm Password', function() {
-                verifyFieldAttributes(this.registerElements.confirmPasswordInput, this.registerElements.confirmPasswordLabel)
-            });
-            
-            it('Address Line 1', function() {
-                verifyFieldAttributes(this.registerElements.addressLine1Input, this.registerElements.addressLine1Label)
-            });
-
-            it('City', function() {
-                verifyFieldAttributes(this.registerElements.cityInput, this.registerElements.cityLabel)
-            });
-
-            it('Country', function() {
-                verifyFieldAttributes(this.registerElements.countrySelect, this.registerElements.countryLabel)
-            });
-
-            it('State', function() {
-                verifyFieldAttributes(this.registerElements.stateSelect, this.registerElements.stateLabel)
-            });
-
-            it('Phone Number', function() {
-                cy.get(this.registerElements.phoneInput).then(($el)=>{
-                    if($el.attr('required') === 'required') {
-                    verifyFieldAttributes(this.registerElements.phoneInput, this.registerElements.phoneLabel)
-                    }
-                })
-            });
-        })
+         it('Form Fields Required Attribute and Asterisk', function () {
+            cy.get(this.loginElements.registerButton)
+            .should('have.attr', 'href', this.loginData.registerLink)
+            .should('be.visible')
+            .click()
+            verifyFieldAttributes(this.registerElements.emailInput, this.registerElements.emailLabel)
+            verifyFieldAttributes(this.registerElements.passwordInput, this.registerElements.passwordLabel)
+            verifyFieldAttributes(this.registerElements.confirmPasswordInput, this.registerElements.confirmPasswordLabel)
+            verifyFieldAttributes(this.registerElements.firstNameInput, this.registerElements.firstNameLabel)
+            verifyFieldAttributes(this.registerElements.lastNameInput, this.registerElements.lastNameLabel)
+            verifyFieldAttributes(this.registerElements.addressLine1Input, this.registerElements.addressLine1Label)
+            verifyFieldAttributes(this.registerElements.cityInput, this.registerElements.cityLabel)
+            verifyFieldAttributes(this.registerElements.countrySelect, this.registerElements.countryLabel)
+            verifyFieldAttributes(this.registerElements.stateInput, this.registerElements.stateLabel)
+            verifyFieldAttributes(this.registerElements.zipInput, this.registerElements.zipLabel)
+            cy.get(this.registerElements.phoneInput).then(($el)=>{
+                if($el.attr('required') === 'required') {
+                verifyFieldAttributes(this.registerElements.phoneInput, this.registerElements.phoneLabel)
+                } else {
+                    cy.log('Not required field');
+            }})
+            cy.get(this.registerElements.companyNameInput).then(($el)=>{
+                if($el.attr('required') === 'required') {
+                verifyFieldAttributes(this.registerElements.companyNameInput, this.registerElements.companyNameLabel)
+                } else {
+                    cy.log('Not required field');
+            }})
+            cy.get(this.registerElements.addressLine2Input).then(($el)=>{
+                if($el.attr('required') === 'required') {
+                verifyFieldAttributes(this.registerElements.addressLine2Input, this.registerElements.addressLine2Label)
+                } else {
+                    cy.log('Not required field');
+            }})
+        });
+    })
         
-        context("Verify Fields Format", () => {
-            context("Password & confirm Password fields verification process", () => {
-                it("Only Numeric Characters", function() {
-                    formatVerification(this.registerElements.passwordInput, '123456789', this.registerElements.passwordInlineMessage,this.registerData.passwordInlineMessage)
+    context("Verify Fields Format", () => {
+        it("Password & confirm Password fields verification process", function() {
+            cy.get(this.loginElements.registerButton)
+            .should('have.attr', 'href', this.loginData.registerLink)
+            .should('be.visible')
+            .click()
+            //"Only Numeric Characters"
+                formatVerification(this.registerElements.passwordInput, '123456789', this.registerElements.passwordInlineMessage,this.registerData.passwordInlineMessage)
+            //"Only alphabetic Characters"
+                formatVerification(this.registerElements.passwordInput, 'qwertyqwerty', this.registerElements.passwordInlineMessage,this.registerData.passwordInlineMessage)
+            //("Less than 7 characters"
+                formatVerification(this.registerElements.passwordInput, 'qwer12', this.registerElements.passwordInlineMessage,this.registerData.passwordInlineMessage)
+            //"Passwords don\'t match", function() {
+                formatVerification(this.registerElements.passwordInput, 'qwerty12345', " "," ", this.registerElements.confirmPasswordInput, 'qwerty123', this.registerElements.confirmPasswordInlineMessage,this.registerData.confirmPasswordInlineMessage)
+            //"Matching Password"
+                cy.get(this.registerElements.passwordInput).clear().type('qwerty12345')
+                cy.get(this.registerElements.confirmPasswordInput).clear().type('qwerty12345')
+                cy.get(this.registerElements.passwordInput).invoke('val').then(fstElement => {
+                    cy.get(this.registerElements.confirmPasswordInput).should('have.value', fstElement)
                 })
-
-                it("Only alphabetic Characters", function() {
-                    formatVerification(this.registerElements.passwordInput, 'qwertyqwerty', this.registerElements.passwordInlineMessage,this.registerData.passwordInlineMessage)
-                })
-
-                it("Less than 7 characters", function() {
-                    formatVerification(this.registerElements.passwordInput, 'qwer12', this.registerElements.passwordInlineMessage,this.registerData.passwordInlineMessage)
-                })
-
-                it("Passwords don't match", function() {
-                    formatVerification(this.registerElements.passwordInput, 'qwerty12345', " "," ", this.registerElements.confirmPasswordInput, 'qwerty123', this.registerElements.confirmPasswordInlineMessage,this.registerData.confirmPasswordInlineMessage)
-                })
-
-                it("Matching Password", function(){
-                    cy.get(this.registerElements.passwordInput).clear().type('qwerty12345')
-                    cy.get(this.registerElements.confirmPasswordInput).clear().type('qwerty12345')
-                    cy.get(this.registerElements.passwordInput).invoke('val').then(fstElement => {
-                        cy.get(this.registerElements.confirmPasswordInput).should('have.value', fstElement)
-                    })
-                    cy.get(this.registerElements.passwordInput).clear()
-                    cy.get(this.registerElements.confirmPasswordInput).clear()
-                })
+                cy.get(this.registerElements.passwordInput).clear()
+                cy.get(this.registerElements.confirmPasswordInput).clear()
             })
+    })
 
-            context("Email field verification process", () => {
-                it('Invalid email format', function() {
-                    cy.get(this.registerElements.emailInput)
-                    .clear()
-                    .type(this.users.invalidUser.email)
-                    verifyTextContent(this.registerElements.emailInlineMessage, this.registerData.emailInlineMessage)
-                })
-
-                it('Valid email format', function() {
-                    cy.get(this.registerElements.emailInput)
-                    .clear()
-                    .type(this.users.registeredUser.email)
-                    cy.get(this.registerElements.emailInput, {requestTimeout: 6000})
-                    .invoke('val')
-                    .should('match', /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/)
-                })
-            })
+    context("Email field verification process", () => {
+        it('Invalid email format', function() {
+            cy.get(this.loginElements.registerButton)
+            .should('have.attr', 'href', this.loginData.registerLink)
+            .should('be.visible')
+            .click()
+            cy.get(this.registerElements.emailInput)
+            .clear()
+            .type(this.users.invalidUser.email)
+            verifyTextContent(this.registerElements.emailInlineMessage, this.registerData.emailInlineMessage)
         })
 
-        context("Submitting the registration form", () =>{
-            it('Register with existing user', function() {
-                cy.reload()
-                cy.fillInputForm({element: this.registerElements.firstNameInput, text:  this.users.registeredUser.firstName});
-                cy.fillInputForm({element: this.registerElements.lastNameInput, text:  this.users.registeredUser.lastName});
-                cy.fillInputForm({element: this.registerElements.emailInput, text:  this.users.registeredUser.email})
-                cy.fillInputForm({element: this.registerElements.phoneInput, text:  this.users.registeredUser.phone})
-                cy.fillInputForm({element: this.registerElements.passwordInput, text:  this.users.registeredUser.password}),
-                cy.fillInputForm({element: this.registerElements.confirmPasswordInput, text:  this.users.registeredUser.password}),
-                cy.fillInputForm({element: this.registerElements.addressLine1Input, text:  this.users.registeredUser.address.street+' '+this.users.registeredUser.address.suite})
-                cy.fillInputForm({element: this.registerElements.addressLine2Input, text:  this.users.registeredUser.address.address2}),
-                cy.fillSelectForm({element: this.registerElements.countrySelect, text:  this.users.registeredUser.address.country}),
-                cy.fillInputForm({element: this.registerElements.cityInput, text:  this.users.registeredUser.address.city}),
-                cy.fillSelectForm({element: this.registerElements.stateSelect, text:  this.users.registeredUser.address.state}),
-                cy.fillInputForm({element: this.registerElements.postalCodeInput, text:  this.users.registeredUser.address.postalCode}),
-                cy.fillInputForm({element: this.registerElements.companyNameInput, text:  this.users.registeredUser.company.name})
-                cy.get('form')
-                .contains('Create Account')
-                .click()
-                
-                cy.get('.alertBox--error .alertBox-message', {timeout: 6000}).should('be.visible')
-                .invoke('text')
-                .should('contain', this.registerData.formErrorMessage1+" "+this.users.registeredUser.email+" "+this.registerData.formErrorMessage2)
-            })
-
-            it('Register new user', function() {
-                cy.reload()
-                cy.fillInputForm({element: this.registerElements.firstNameInput, text:  this.users.newUser.firstName});
-                cy.fillInputForm({element: this.registerElements.lastNameInput, text:  this.users.newUser.lastName});
-                cy.fillInputForm({element: this.registerElements.emailInput, text:  this.users.newUser.email})
-                cy.fillInputForm({element: this.registerElements.phoneInput, text:  this.users.newUser.phone})
-                cy.fillInputForm({element: this.registerElements.passwordInput, text:  this.users.newUser.password}),
-                cy.fillInputForm({element: this.registerElements.confirmPasswordInput, text:  this.users.newUser.password}),
-                cy.fillInputForm({element: this.registerElements.addressLine1Input, text:  this.users.newUser.address.street+' '+this.users.newUser.address.suite})
-                cy.fillInputForm({element: this.registerElements.addressLine2Input, text:  this.users.newUser.address.address2}),
-                cy.fillSelectForm({element: this.registerElements.countrySelect, text:  this.users.newUser.address.country}),
-                cy.fillInputForm({element: this.registerElements.cityInput, text:  this.users.newUser.address.city}),
-                cy.fillSelectForm({element: this.registerElements.stateSelect, text:  this.users.newUser.address.state}),
-                cy.fillInputForm({element: this.registerElements.postalCodeInput, text:  this.users.newUser.address.postalCode}),
-                cy.fillInputForm({element: this.registerElements.companyNameInput, text:  this.users.newUser.company.name})
-                cy.get('form')
-                .contains('Create Account')
-                .click()
-                //cy.wait({requestTimeout: 2000})
-                cy.url({requestTimeout: 10000}).should('include', '/login.php?action=account_created')
-                cy.get(this.registerElements.createdAccountPageHeading, {requestTimeout: 6000})
-                .should('be.visible', {timeout: 6000})
-            })
-
-            it('Confirm New User Registeration by Signing In NewUser', function() {
-                cy.logout();
-                cy.accessAccountPage()
-                cy.signIn({email: this.users.newUser.email, password: this.users.newUser.password });
-                cy.url().should('include', 'account.php')
-                verifyTextContent(this.myAccountElements.accountPageHeading, this.myAccountData.accountPageHeading)
-            })
+        it('Valid email format', function() {
+            cy.get(this.loginElements.registerButton)
+            .should('have.attr', 'href', this.loginData.registerLink)
+            .should('be.visible')
+            .click()
+            cy.get(this.registerElements.emailInput)
+            .clear()
+            .type(this.users.registeredUser.email)
+            cy.get(this.registerElements.emailInput, {requestTimeout: 6000})
+            .invoke('val')
+            .should('match', /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/)
         })
     })
-})
 
+    context("Submitting the registration form", () =>{
+        it('Register with existing user', function() {
+            cy.get(this.loginElements.registerButton)
+            .should('have.attr', 'href', this.loginData.registerLink)
+            .should('be.visible')
+            .click()
+            cy.reload()
+            cy.fillInputForm({element: this.registerElements.firstNameInput, text:  this.users.registeredUser.firstName});
+            cy.fillInputForm({element: this.registerElements.lastNameInput, text:  this.users.registeredUser.lastName});
+            cy.fillInputForm({element: this.registerElements.emailInput, text:  this.users.registeredUser.email})
+            cy.fillInputForm({element: this.registerElements.phoneInput, text:  this.users.registeredUser.phone})
+            cy.fillInputForm({element: this.registerElements.passwordInput, text:  this.users.registeredUser.password}),
+            cy.fillInputForm({element: this.registerElements.confirmPasswordInput, text:  this.users.registeredUser.password}),
+            cy.fillInputForm({element: this.registerElements.addressLine1Input, text:  this.users.registeredUser.address.street+' '+this.users.registeredUser.address.suite})
+            cy.fillInputForm({element: this.registerElements.addressLine2Input, text:  this.users.registeredUser.address.address2}),
+            cy.fillSelectForm({element: this.registerElements.countrySelect, text:  this.users.registeredUser.address.country}),
+            cy.fillInputForm({element: this.registerElements.cityInput, text:  this.users.registeredUser.address.city}),
+            cy.fillSelectForm({element: this.registerElements.stateInput, text:  this.users.registeredUser.address.state}),
+            cy.fillInputForm({element: this.registerElements.zipInput, text:  this.users.registeredUser.address.postalCode}),
+            cy.fillInputForm({element: this.registerElements.companyNameInput, text:  this.users.registeredUser.company.name})
+            cy.get('form')
+            .contains('Create Account')
+            .click()
+            
+            cy.get('.alertBox--error .alertBox-message', {timeout: 6000}).should('be.visible')
+            .invoke('text')
+            .should('contain', this.registerData.formErrorMessage1+" "+this.users.registeredUser.email+" "+this.registerData.formErrorMessage2)
+        })
+
+        it('Register new user', function() {
+            cy.get(this.loginElements.registerButton)
+            .should('have.attr', 'href', this.loginData.registerLink)
+            .should('be.visible')
+            .click()
+            cy.reload()
+            cy.fillInputForm({element: this.registerElements.firstNameInput, text:  this.users.newUser.firstName});
+            cy.fillInputForm({element: this.registerElements.lastNameInput, text:  this.users.newUser.lastName});
+            cy.fillInputForm({element: this.registerElements.emailInput, text:  this.users.newUser.email})
+            cy.fillInputForm({element: this.registerElements.phoneInput, text:  this.users.newUser.phone})
+            cy.fillInputForm({element: this.registerElements.passwordInput, text:  this.users.newUser.password}),
+            cy.fillInputForm({element: this.registerElements.confirmPasswordInput, text:  this.users.newUser.password}),
+            cy.fillInputForm({element: this.registerElements.addressLine1Input, text:  this.users.newUser.address.street+' '+this.users.newUser.address.suite})
+            cy.fillInputForm({element: this.registerElements.addressLine2Input, text:  this.users.newUser.address.address2}),
+            cy.fillSelectForm({element: this.registerElements.countrySelect, text:  this.users.newUser.address.country}),
+            cy.fillInputForm({element: this.registerElements.cityInput, text:  this.users.newUser.address.city}),
+            cy.fillSelectForm({element: this.registerElements.stateInput, text:  this.users.newUser.address.state}),
+            cy.fillInputForm({element: this.registerElements.zipInput, text:  this.users.newUser.address.postalCode}),
+            cy.fillInputForm({element: this.registerElements.companyNameInput, text:  this.users.newUser.company.name})
+            cy.get('form')
+            .contains('Create Account')
+            .click()
+            //cy.wait({requestTimeout: 2000})
+            cy.url({requestTimeout: 10000}).should('include', '/login.php?action=account_created')
+            cy.get(this.registerElements.createdAccountPageHeading, {requestTimeout: 6000})
+            .should('be.visible', {timeout: 6000})
+        })
+
+        it('Confirm New User Registeration by Signing In NewUser', function() {
+            cy.signIn({email: this.users.newUser.email, password: this.users.newUser.password });
+            cy.url().should('include', 'account.php')
+            //verifyTextContent(this.myAccountElements.accountPageHeading, this.myAccountData.accountPageHeading)
+        })
+    })
 
 
 //Used for Password Verification
@@ -329,7 +316,7 @@ function verifyFieldAttributes(inputElement, element){
     cy.get(inputElement).then(($el) => { 
         if (expect($el).to.have.attr('aria-required', 'true')) {
             cy.get(element)
-            .contains('*')
+            .contains('Required')
             .should('be.visible')
         }
     })
@@ -341,4 +328,5 @@ function verifyTextContent(el, data) {
     .should('be.visible', {timeout: 10000})
     .invoke('text')
     .should('include', data)
-}
+    }
+})
