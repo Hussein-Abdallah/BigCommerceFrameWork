@@ -31,5 +31,8 @@
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0",
     "npm": "^10.2.3"
+  },
+  "dependencies": {
+    "moment": "^2.29.4"
   }
 }

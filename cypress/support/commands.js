@@ -93,7 +93,7 @@ Cypress.Commands.add("fillSelectForm", ({element, text}) => {
     })    
  });
 
- Cypress.Commands.add("brokenLinks",()=>{
+ Cypress.Commands.add("brokenLinks",(name)=>{
      
     cy.writeFile('cypress/Link_Report/'+name+'.csv','ID, Name, Link, Status\n', { encoding: 'utf-8'})
     cy.get('a').each(function ($a, x =0) {

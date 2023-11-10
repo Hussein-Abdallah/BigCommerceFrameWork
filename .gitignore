@@ -6,3 +6,4 @@ cypress/e2e/.DS_Store
 /cypress/videos
 /cypress/screenshots
 /cypress/downloads
+/cypress/Link_Report
